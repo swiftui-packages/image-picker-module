@@ -117,7 +117,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
 
             ).textCase(nil)
 
-            EmptyView().sheet(isPresented: self.$showCameraImagePicker) {
+            Text("").sheet(isPresented: self.$showCameraImagePicker) {
 
                 ImagePicker(sourceType: UIImagePickerController.SourceType.camera) { image in
                     self.selectedImage = image
@@ -125,7 +125,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
 
             }
 
-            EmptyView().sheet(isPresented: self.$showLibraryImagePicker) {
+            Text("").sheet(isPresented: self.$showLibraryImagePicker) {
 
                 ImagePicker(sourceType: .photoLibrary) { image in
                     self.selectedImage = image
@@ -133,7 +133,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
 
             }
 
-            EmptyView().sheet(isPresented: self.$showSelectedImage) {
+            Text("").sheet(isPresented: self.$showSelectedImage) {
 
                 if let defaultImageContent = self.defaultImageContent {
 

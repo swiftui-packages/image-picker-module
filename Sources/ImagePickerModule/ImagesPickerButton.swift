@@ -73,13 +73,13 @@ public struct ImagesPickerButton<Content: View>: View {
 
             ).textCase(nil)
 
-            EmptyView().sheet(isPresented: self.$showCameraImagePicker) {
+            Text("").sheet(isPresented: self.$showCameraImagePicker) {
                 ImagePicker(sourceType: UIImagePickerController.SourceType.camera) { image in
                     self.selectedImages.append(image)
                 }.ignoresSafeArea()
             }
 
-            EmptyView().sheet(isPresented: self.$showLibraryImagePicker) {
+            Text("").sheet(isPresented: self.$showLibraryImagePicker) {
                 ImagePicker(sourceType: .photoLibrary) { image in
                     self.selectedImages.append(image)
                 }.ignoresSafeArea()
