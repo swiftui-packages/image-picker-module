@@ -111,7 +111,11 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
 
                 label: {
 
-                    self.label
+                    if let defaultImageContent = self.defaultImageContent {
+                        defaultImageContent()
+                    } else {
+                        self.label
+                    }
 
                 }
 

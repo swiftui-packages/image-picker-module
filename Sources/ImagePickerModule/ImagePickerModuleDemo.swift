@@ -39,7 +39,7 @@ public struct ImagePickerDemo: View {
                 ImagePickerButton(
                     selectedImage: self.$selectedImage,
                     label: { Image(systemName: "photo") },
-                    defaultImageContent: { Image(systemName: "photo") }
+                    defaultImageContent: nil != nil ? nil : { Text("Default") }
                 )
 
                 ImagePickerButton(
