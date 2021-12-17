@@ -19,7 +19,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
         selectedImage: Binding<UIImage?>,
         noCameraAccessStrategy: NoCameraAccessStrategy = NoCameraAccessStrategy.showToSettings,
         onDelete: @escaping (() -> Void) = {},
-        label: @escaping () -> Content,
+        @ViewBuilder label: @escaping () -> Content,
         defaultImageContent: (() -> DefaultImageContent)?
     ) {
         self._selectedImage = selectedImage
