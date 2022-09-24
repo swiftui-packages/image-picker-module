@@ -23,6 +23,18 @@ public struct ImagePickerDemo: View {
                 // ImagePicker(sourceType: .savedPhotosAlbum, onImagePicked: { image in })
             }
 
+//            if let selectedImage = self.selectedImage {
+//
+//                Section {
+//
+//                    Image(uiImage: selectedImage)
+//                        .resizable()
+//                        .scaledToFit()
+//
+//                }
+//
+//            }
+
             Section(header: Text("Image Picker Button")) {
                 ImagePickerButton(selectedImage: self.$selectedImage) {
                     Image(systemName: "photo")
