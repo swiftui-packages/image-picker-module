@@ -56,16 +56,16 @@ public struct ImagePickerDemo: View {
 
                 ImagePickerButton(
                     selectedImage: self.$selectedImage,
-                    onDelete: {},
                     label: { Image(systemName: "photo") },
+                    onDelete: {},
                     defaultImageContent: { Image(systemName: "photo") }
                 )
 
                 ImagePickerButton(
                     selectedImage: self.$selectedImage,
                     noCameraAccessStrategy: .hideOption,
-                    onDelete: {},
                     label: { Image(systemName: "photo") },
+                    onDelete: {},
                     defaultImageContent: { Image(systemName: "photo") }
                 )
             }

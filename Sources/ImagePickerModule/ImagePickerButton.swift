@@ -28,20 +28,6 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
     @State private var showSelectedImage: Bool = false
     @State private var showCameraAccessRequiredAlert: Bool = false
 
-    public init(
-        selectedImage: Binding<UIImage?>,
-        noCameraAccessStrategy: NoCameraAccessStrategy = NoCameraAccessStrategy.showToSettings,
-        onDelete: (() -> Void)? = nil,
-        label: @escaping () -> Content,
-        defaultImageContent: (() -> DefaultImageContent)?
-    ) {
-        self._selectedImage = selectedImage
-        self.noCameraAccessStrategy = noCameraAccessStrategy
-        self.onDelete = onDelete
-        self.label = label()
-        self.defaultImageContent = defaultImageContent
-    }
-
     public var body: some View {
 
         ZStack {
@@ -177,6 +163,28 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
 
 }
 
+
+
+extension ImagePickerButton {
+
+    public init(
+        selectedImage: Binding<UIImage?>,
+        noCameraAccessStrategy: NoCameraAccessStrategy = NoCameraAccessStrategy.showToSettings,
+        label: @escaping () -> Content,
+        onDelete: (() -> Void)? = nil,
+        defaultImageContent: (() -> DefaultImageContent)?
+    ) {
+        self._selectedImage = selectedImage
+        self.noCameraAccessStrategy = noCameraAccessStrategy
+        self.onDelete = onDelete
+        self.label = label()
+        self.defaultImageContent = defaultImageContent
+    }
+
+}
+
+
+
 extension ImagePickerButton where DefaultImageContent == EmptyView {
 
     public init(
@@ -188,8 +196,8 @@ extension ImagePickerButton where DefaultImageContent == EmptyView {
         self.init(
             selectedImage: selectedImage,
             noCameraAccessStrategy: noCameraAccessStrategy,
-            onDelete: onDelete,
             label: label,
+            onDelete: onDelete,
             defaultImageContent: nil
         )
     }
