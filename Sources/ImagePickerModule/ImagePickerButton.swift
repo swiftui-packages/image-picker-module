@@ -15,11 +15,24 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
         case hideOption, showToSettings
     }
 
+    private let noCameraAccessStrategy: NoCameraAccessStrategy
+
+    @Binding private var selectedImage: UIImage?
+    private let label: Content
+
+    private let onDelete: (() -> Void)?
+    private let defaultImageContent: (() -> DefaultImageContent)?
+
+    @State private var showCameraImagePicker: Bool = false
+    @State private var showLibraryImagePicker: Bool = false
+    @State private var showSelectedImage: Bool = false
+    @State private var showCameraAccessRequiredAlert: Bool = false
+
     public init(
         selectedImage: Binding<UIImage?>,
         noCameraAccessStrategy: NoCameraAccessStrategy = NoCameraAccessStrategy.showToSettings,
-        onDelete: @escaping (() -> Void) = {},
-        @ViewBuilder label: @escaping () -> Content,
+        onDelete: (() -> Void)? = nil,
+        label: @escaping () -> Content,
         defaultImageContent: (() -> DefaultImageContent)?
     ) {
         self._selectedImage = selectedImage
@@ -28,19 +41,6 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
         self.label = label()
         self.defaultImageContent = defaultImageContent
     }
-
-    private let noCameraAccessStrategy: NoCameraAccessStrategy
-
-    @Binding public var selectedImage: UIImage?
-    public let label: Content
-
-    public let onDelete: () -> Void
-    public let defaultImageContent: (() -> DefaultImageContent)?
-
-    @State private var showCameraImagePicker: Bool = false
-    @State private var showLibraryImagePicker: Bool = false
-    @State private var showSelectedImage: Bool = false
-    @State private var showCameraAccessRequiredAlert: Bool = false
 
     public var body: some View {
 
@@ -93,9 +93,13 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
                             }
                         )
 
+                    }
+
+                    if let onDelete = self.onDelete {
+
                         Button(
                             action: {
-                                self.onDelete()
+                                onDelete()
                                 self.selectedImage = nil
                             },
                             label: {
@@ -105,6 +109,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
                                 )
                             }
                         )
+
                     }
 
                 },
@@ -159,8 +164,8 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
                     title: Text(NSLocalizedString("Kamerazugriff benötigt", comment: "")),
                     message: Text(NSLocalizedString("Der Kamerazugriff kann in den Systemeinstellungen für diese App gewährt werden.", comment: "")),
                     primaryButton: Alert.Button.default(Text(NSLocalizedString("Einstellungen", comment: ""))) {
-                        guard let settingsULR = URL(string: UIApplication.openSettingsURLString) else { return }
-                        UIApplication.shared.open(settingsULR, options: [:], completionHandler: nil)
+                        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+                        UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
                     },
                     secondaryButton: Alert.Button.cancel()
                 )
@@ -177,8 +182,8 @@ extension ImagePickerButton where DefaultImageContent == EmptyView {
     public init(
         selectedImage: Binding<UIImage?>,
         noCameraAccessStrategy: NoCameraAccessStrategy = NoCameraAccessStrategy.showToSettings,
-        @ViewBuilder label: @escaping () -> Content,
-        onDelete: @escaping (() -> Void) = {}
+        label: @escaping () -> Content,
+        onDelete: (() -> Void)? = nil
     ) {
         self.init(
             selectedImage: selectedImage,
