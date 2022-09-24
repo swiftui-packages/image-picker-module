@@ -44,7 +44,7 @@ public struct ImagesPickerButton<Content: View>: View {
                     Button(
                         action: { self.showLibraryImagePicker = true },
                         label: {
-                            Label("Foto aus Bibliothek auswählen", systemImage: "folder")
+                            Label(NSLocalizedString("Foto aus Bibliothek auswählen", comment: ""), systemImage: "folder")
                         }
                     )
 
@@ -53,7 +53,7 @@ public struct ImagesPickerButton<Content: View>: View {
 
                         Button(
                             action: { self.showCameraImagePicker = true },
-                            label: { Label("Foto mit Kamera aufnehmen", systemImage: "camera") }
+                            label: { Label(NSLocalizedString("Foto mit Kamera aufnehmen", comment: ""), systemImage: "camera") }
                         )
 
                     } else if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
@@ -61,7 +61,7 @@ public struct ImagesPickerButton<Content: View>: View {
                         if self.noCameraAccessStrategy == NoCameraAccessStrategy.showToSettings {
                             Button(
                                 action: { self.showCameraAccessRequiredAlert = true },
-                                label: { Label("Foto mit Kamera aufnehmen", systemImage: "camera") }
+                                label: { Label(NSLocalizedString("Foto mit Kamera aufnehmen", comment: ""), systemImage: "camera") }
                             )
                         }
 
@@ -87,9 +87,9 @@ public struct ImagesPickerButton<Content: View>: View {
 
             Text("").alert(isPresented: self.$showCameraAccessRequiredAlert) {
                 Alert(
-                    title: Text("Kamerazugriff benötigt"),
-                    message: Text("Der Kamerazugriff kann in den Systemeinstellungen für diese App gewährt werden."),
-                    primaryButton: Alert.Button.default(Text("Einstellungen")) {
+                    title: Text(NSLocalizedString("Kamerazugriff benötigt", comment: "")),
+                    message: Text(NSLocalizedString("Der Kamerazugriff kann in den Systemeinstellungen für diese App gewährt werden.", comment: "")),
+                    primaryButton: Alert.Button.default(Text(NSLocalizedString("Einstellungen", comment: ""))) {
                         guard let settingsULR = URL(string: UIApplication.openSettingsURLString) else { return }
                         UIApplication.shared.open(settingsULR, options: [:], completionHandler: nil)
                     },

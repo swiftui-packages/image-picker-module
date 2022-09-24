@@ -53,7 +53,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
                     Button(
                         action: { self.showLibraryImagePicker = true },
                         label: {
-                            Label("Foto aus Bibliothek auswählen", systemImage: "folder")
+                            Label(NSLocalizedString("Foto aus Bibliothek auswählen", comment: ""), systemImage: "folder")
                         }
                     )
 
@@ -62,7 +62,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
 
                         Button(
                             action: { self.showCameraImagePicker = true },
-                            label: { Label("Foto mit Kamera aufnehmen", systemImage: "camera") }
+                            label: { Label(NSLocalizedString("Foto mit Kamera aufnehmen", comment: ""), systemImage: "camera") }
                         )
 
                     } else if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
@@ -72,7 +72,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
                                 action: { self.showCameraAccessRequiredAlert = true },
                                 label: {
                                     Label(
-                                        "Foto mit Kamera aufnehmen",
+                                        NSLocalizedString("Foto mit Kamera aufnehmen", comment: ""),
                                         systemImage: "camera"
                                     )
                                 }
@@ -87,7 +87,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
                             action: { self.showSelectedImage = true },
                             label: {
                                 Label(
-                                    "Aktuelles Bild anzeigen",
+                                    NSLocalizedString("Aktuelles Bild anzeigen", comment: ""),
                                     systemImage: "arrow.up.backward.and.arrow.down.forward"
                                 )
                             }
@@ -100,7 +100,7 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
                             },
                             label: {
                                 Label(
-                                    "Aktuelles Bild entfernen",
+                                    NSLocalizedString("Aktuelles Bild entfernen", comment: ""),
                                     systemImage: "xmark"
                                 )
                             }
@@ -156,9 +156,9 @@ public struct ImagePickerButton<Content: View, DefaultImageContent: View>: View 
 
             Text("").alert(isPresented: self.$showCameraAccessRequiredAlert) {
                 Alert(
-                    title: Text("Kamerazugriff benötigt"),
-                    message: Text("Der Kamerazugriff kann in den Systemeinstellungen für diese App gewährt werden."),
-                    primaryButton: Alert.Button.default(Text("Einstellungen")) {
+                    title: Text(NSLocalizedString("Kamerazugriff benötigt", comment: "")),
+                    message: Text(NSLocalizedString("Der Kamerazugriff kann in den Systemeinstellungen für diese App gewährt werden.", comment: "")),
+                    primaryButton: Alert.Button.default(Text(NSLocalizedString("Einstellungen", comment: ""))) {
                         guard let settingsULR = URL(string: UIApplication.openSettingsURLString) else { return }
                         UIApplication.shared.open(settingsULR, options: [:], completionHandler: nil)
                     },
