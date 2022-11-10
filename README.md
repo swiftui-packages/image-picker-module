@@ -9,16 +9,18 @@
 ## Usage
 You have 3 options to make use of the Image Picker Module in your SwiftUI project:
 
-1.  Use plain ImagePicker which has the parameters soruce type and a completion function, which returns the selected picture or taken photo
-2.  Use the ImagePickerButton which takes a binding of an optional UIImage and lets you define a label for the button. The Button itself comes with some functionality, which will be expanded in the future. For example does it detect if a photo was taken and shows you the option to remove it or show it in full screen.
-3.  Use the ImagesPickerButton, which is supposed to expand image collections and there for takes a UIImage Array Binding and again lets you set its label.
+1.  Use plain MediaPicker which has the parameters source type and a completion function, which returns the selected picture or taken photo/video
+2.  Use the SingleMediaPickerButton which takes a binding of an optional UIImage and URL and lets you define a label for the button.
+    The Button itself comes with some functionality, which will be expanded in the future. 
+    For example does it detect if a photo/video was taken and shows you the option to remove it or show it in full screen.
+3.  Use the MediasPickerButton, which is supposed to expand image/video collections and there for takes a UIImage Array Binding/ URL Array Binding and again lets you set its label.
 
 <br>
 
 ## Integration
 1.  Copy the resource url:
 ```
-https://github.com/swiftui-packages/image-picker-module.git
+https://github.com/Kuama-IT/image-picker-module.git
 ```
 
 2.  Open your Xcode project
@@ -45,7 +47,8 @@ https://github.com/swiftui-packages/image-picker-module.git
 <br>
 
 ## required info.plist entries
--   _Privacy - Camera Usage Description_
+- _Privacy - Camera Usage Description_
+- _Privacy - Microphone Usage Description_
 
 <br>
 

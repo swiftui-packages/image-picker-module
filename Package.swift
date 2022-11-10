@@ -10,13 +10,13 @@ let package = Package(
         .library(
             name: "ImagePickerModule",
             targets: ["ImagePickerModule"]
-        )
+        ),
     ],
     targets: [
         .target(name: "ImagePickerModule"),
         .testTarget(
             name: "ImagePickerModuleTests",
             dependencies: ["ImagePickerModule"]
-        )
+        ),
     ]
 )
