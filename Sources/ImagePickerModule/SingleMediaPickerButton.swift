@@ -31,6 +31,14 @@ import SwiftUI
         @State private var showSelectedImageOrVideo: Bool = false
         @State private var showCameraAndMicrophoneAccessRequiredAlert: Bool = false
 
+        var selectPhotoOrVideoText: String
+        var takePhotoOrVideoText: String
+        var grantCameraAndMicrophoneText: String
+        var showCurrentPhotoOrVideoText: String
+        var deleteCurrentPhotoOrVideoText: String
+        var grantCameraAndMicrophoneTextMessage: String
+        var settingsText: String
+
         init(
             selectedImage: Binding<UIImage?>,
             selectedVideo: Binding<URL?>,
@@ -38,7 +46,14 @@ import SwiftUI
             label: @escaping () -> Content,
             onDelete: (() -> Void)? = nil,
             defaultImageContent: (() -> DefaultImageContent)?,
-            allowsEditing: Bool = false
+            allowsEditing: Bool = false,
+            selectPhotoOrVideoText: String = "Selezionare la foto o il video dalla libreria",
+            takePhotoOrVideoText: String = "Scattare una foto o video con la fotocamera",
+            showCurrentPhotoOrVideoText: String = "Mostra l'immagine o video corrente",
+            deleteCurrentPhotoOrVideoText: String = "Rimuovere l'immagine o video corrente",
+            grantCameraAndMicrophoneText: String = "È necessario l'accesso alla telecamera e al microfono",
+            grantCameraAndMicrophoneTextMessage: String = "L'accesso alla fotocamera e al microfono può essere concesso nelle impostazioni di sistema di questa applicazione.",
+            settingsText: String = "Impostazioni"
         ) {
             _selectedImage = selectedImage
             _selectedVideo = selectedVideo
@@ -47,6 +62,13 @@ import SwiftUI
             self.label = label()
             self.defaultImageContent = defaultImageContent
             self.allowsEditing = allowsEditing
+            self.selectPhotoOrVideoText = selectPhotoOrVideoText
+            self.takePhotoOrVideoText = takePhotoOrVideoText
+            self.showCurrentPhotoOrVideoText = showCurrentPhotoOrVideoText
+            self.deleteCurrentPhotoOrVideoText = deleteCurrentPhotoOrVideoText
+            self.grantCameraAndMicrophoneText = grantCameraAndMicrophoneText
+            self.grantCameraAndMicrophoneTextMessage = grantCameraAndMicrophoneTextMessage
+            self.settingsText = settingsText
         }
 
         public var body: some View {
@@ -56,8 +78,7 @@ import SwiftUI
                         Button(
                             action: { self.showLibraryMediaPicker = true },
                             label: {
-                                Label(NSLocalizedString("Selezionare la foto o video dalla libreria", comment: ""),
-                                      systemImage: "folder")
+                                Label(self.selectPhotoOrVideoText, systemImage: "folder")
                             }
                         )
 
@@ -67,8 +88,7 @@ import SwiftUI
                             Button(
                                 action: { self.showCameraMediaPicker = true },
                                 label: {
-                                    Label(NSLocalizedString("Scattare una foto o video con la fotocamera", comment: ""),
-                                          systemImage: "camera")
+                                    Label(self.takePhotoOrVideoText, systemImage: "camera")
                                 }
                             )
 
@@ -79,10 +99,7 @@ import SwiftUI
                                         self.showCameraAndMicrophoneAccessRequiredAlert = true
                                     },
                                     label: {
-                                        Label(
-                                            NSLocalizedString("Scattare una foto o video con la fotocamera", comment: ""),
-                                            systemImage: "camera"
-                                        )
+                                        Label(self.takePhotoOrVideoText, systemImage: "camera")
                                     }
                                 )
                             }
@@ -92,10 +109,7 @@ import SwiftUI
                             Button(
                                 action: { self.showSelectedImageOrVideo = true },
                                 label: {
-                                    Label(
-                                        NSLocalizedString("Mostra l'immagine o video corrente", comment: ""),
-                                        systemImage: "arrow.up.backward.and.arrow.down.forward"
-                                    )
+                                    Label(self.showCurrentPhotoOrVideoText, systemImage: "arrow.up.backward.and.arrow.down.forward")
                                 }
                             )
                         }
@@ -108,10 +122,8 @@ import SwiftUI
                                     self.selectedVideo = nil
                                 },
                                 label: {
-                                    Label(
-                                        NSLocalizedString("Rimuovere l'immagine o video corrente", comment: ""),
-                                        systemImage: "xmark"
-                                    )
+                                    Label(self.deleteCurrentPhotoOrVideoText,
+                                          systemImage: "xmark")
                                 }
                             )
                         }
@@ -165,9 +177,9 @@ import SwiftUI
 
                 Text("").alert(isPresented: self.$showCameraAndMicrophoneAccessRequiredAlert) {
                     Alert(
-                        title: Text(NSLocalizedString("È necessario l'accesso alla telecamera", comment: "")),
-                        message: Text(NSLocalizedString("L'accesso alla fotocamera può essere concesso nelle impostazioni di sistema di questa applicazione.", comment: "")),
-                        primaryButton: Alert.Button.default(Text(NSLocalizedString("Impostazioni", comment: ""))) {
+                        title: Text(self.grantCameraAndMicrophoneText),
+                        message: Text(self.grantCameraAndMicrophoneTextMessage),
+                        primaryButton: Alert.Button.default(Text(self.settingsText)) {
                             guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
                             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
                         },
